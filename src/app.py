@@ -39,6 +39,43 @@ activities = {
         "max_participants": 30,
         "participants": ["john@mergington.edu", "olivia@mergington.edu"]
     }
+    ,
+        "Basketball Team": {
+            "description": "Join the school basketball team and compete in local leagues",
+            "schedule": "Mondays and Thursdays, 4:00 PM - 6:00 PM",
+            "max_participants": 15,
+            "participants": []
+        },
+        "Soccer Club": {
+            "description": "Practice soccer skills and play friendly matches",
+            "schedule": "Wednesdays, 3:30 PM - 5:30 PM",
+            "max_participants": 18,
+            "participants": []
+        },
+        "Art Club": {
+            "description": "Explore painting, drawing, and other visual arts",
+            "schedule": "Tuesdays, 3:30 PM - 5:00 PM",
+            "max_participants": 16,
+            "participants": []
+        },
+        "Drama Society": {
+            "description": "Participate in acting, stage production, and school plays",
+            "schedule": "Fridays, 4:00 PM - 6:00 PM",
+            "max_participants": 20,
+            "participants": []
+        },
+        "Math Olympiad": {
+            "description": "Prepare for math competitions and solve challenging problems",
+            "schedule": "Thursdays, 3:30 PM - 5:00 PM",
+            "max_participants": 10,
+            "participants": []
+        },
+        "Debate Club": {
+            "description": "Develop public speaking and argumentation skills",
+            "schedule": "Wednesdays, 4:00 PM - 5:30 PM",
+            "max_participants": 14,
+            "participants": []
+        }
 }
 
 
@@ -58,6 +95,10 @@ def signup_for_activity(activity_name: str, email: str):
     # Validate activity exists
     if activity_name not in activities:
         raise HTTPException(status_code=404, detail="Activity not found")
+    # Validate student is not already signed up
+    if email in activities[activity_name]["participants"]:
+        raise HTTPException(status_code=400, detail="Already signed up for this activity")
+
 
     # Get the specific activity
     activity = activities[activity_name]
